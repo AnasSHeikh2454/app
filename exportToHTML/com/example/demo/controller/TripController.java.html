@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>TripController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TripController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">demo</span><span class="s2">.</span><span class="s1">controller</span><span class="s2">;</span>
+
+
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">demo</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Trip</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">demo</span><span class="s2">.</span><span class="s1">service</span><span class="s2">.</span><span class="s1">TripService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">beans</span><span class="s2">.</span><span class="s1">factory</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">Autowired</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">bind</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.*;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Date</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+<span class="s1">@RestController</span>
+<span class="s1">@RequestMapping</span><span class="s2">(</span><span class="s3">&quot;/api/trips&quot;</span><span class="s2">)</span>
+<span class="s0">public class </span><span class="s1">TripController </span><span class="s2">{</span>
+    <span class="s1">@Autowired</span>
+    <span class="s0">private </span><span class="s1">TripService tripService</span><span class="s2">;</span>
+
+    <span class="s1">@PostMapping</span>
+    <span class="s0">public </span><span class="s1">Trip postTrip</span><span class="s2">(</span><span class="s1">@RequestBody Trip trip</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">tripService</span><span class="s2">.</span><span class="s1">saveTrip</span><span class="s2">(</span><span class="s1">trip</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/search&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Trip</span><span class="s2">&gt; </span><span class="s1">searchTrips</span><span class="s2">(</span><span class="s1">@RequestParam String destination</span><span class="s2">,</span>
+                                  <span class="s1">@RequestParam Date start</span><span class="s2">,</span>
+                                  <span class="s1">@RequestParam Date end</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">tripService</span><span class="s2">.</span><span class="s1">searchTrips</span><span class="s2">(</span><span class="s1">destination</span><span class="s2">, </span><span class="s1">start</span><span class="s2">, </span><span class="s1">end</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>AuthController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AuthController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">demo</span><span class="s2">.</span><span class="s1">controller</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">demo</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">User</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">demo</span><span class="s2">.</span><span class="s1">service</span><span class="s2">.</span><span class="s1">UserService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">beans</span><span class="s2">.</span><span class="s1">factory</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">Autowired</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">crypto</span><span class="s2">.</span><span class="s1">password</span><span class="s2">.</span><span class="s1">PasswordEncoder</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">bind</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.*;</span>
+
+<span class="s1">@RestController</span>
+<span class="s1">@RequestMapping</span><span class="s2">(</span><span class="s3">&quot;/auth&quot;</span><span class="s2">)</span>
+<span class="s0">public class </span><span class="s1">AuthController </span><span class="s2">{</span>
+    <span class="s1">@Autowired</span>
+    <span class="s0">private </span><span class="s1">UserService userService</span><span class="s2">;</span>
+
+    <span class="s1">@Autowired</span>
+    <span class="s0">private </span><span class="s1">PasswordEncoder passwordEncoder</span><span class="s2">;</span>
+
+    <span class="s1">@PostMapping</span><span class="s2">(</span><span class="s3">&quot;/signup&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">String signUp</span><span class="s2">(</span><span class="s1">@RequestBody User user</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Received signup request: &quot; </span><span class="s2">+ </span><span class="s1">user</span><span class="s2">);</span>
+            <span class="s1">user</span><span class="s2">.</span><span class="s1">setPassword</span><span class="s2">(</span><span class="s1">passwordEncoder</span><span class="s2">.</span><span class="s1">encode</span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">getPassword</span><span class="s2">()));</span>
+            <span class="s1">userService</span><span class="s2">.</span><span class="s1">saveUser</span><span class="s2">(</span><span class="s1">user</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;User signed up successfully&quot;</span><span class="s2">);</span>
+            <span class="s0">return </span><span class="s3">&quot;User signed up successfully&quot;</span><span class="s2">;</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s4">// Log the exception for debugging</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Error signing up: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s0">return </span><span class="s3">&quot;Error signing up: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@PostMapping</span><span class="s2">(</span><span class="s3">&quot;/login&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">String login</span><span class="s2">(</span><span class="s1">@RequestBody User loginUser</span><span class="s2">) {</span>
+        <span class="s1">User user </span><span class="s2">= </span><span class="s1">userService</span><span class="s2">.</span><span class="s1">findByPhone</span><span class="s2">(</span><span class="s1">loginUser</span><span class="s2">.</span><span class="s1">getPhone</span><span class="s2">());</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">user </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">&amp;&amp; </span><span class="s1">passwordEncoder</span><span class="s2">.</span><span class="s1">matches</span><span class="s2">(</span><span class="s1">loginUser</span><span class="s2">.</span><span class="s1">getPassword</span><span class="s2">(), </span><span class="s1">user</span><span class="s2">.</span><span class="s1">getPassword</span><span class="s2">())) {</span>
+            <span class="s0">return </span><span class="s3">&quot;User logged in successfully&quot;</span><span class="s2">;</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s0">return </span><span class="s3">&quot;Invalid phone number or password&quot;</span><span class="s2">;</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
