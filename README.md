@@ -89,7 +89,7 @@ Cab_Sharing_Web_App/
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/AnasSHeikh2454/Cab_sharing_web_app.git
+git clone https://github.com/AnasSHeikh2454/app.git
 cd Cab_Sharing_Web_App
 ```
 
